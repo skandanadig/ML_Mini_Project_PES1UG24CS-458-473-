@@ -126,18 +126,18 @@ def train_and_evaluate():
     ax1.set_title('Exact Analytical Solution', fontsize=14)
     ax1.set_xlabel('Time ($\hat{t}$)', fontsize=12)
     ax1.set_ylabel('Space ($\hat{x}$)', fontsize=12)
-    fig.colorbar(im1, ax1=ax1)
+    fig.colorbar(im1, ax=ax1)
     
     im2 = ax2.contourf(T, X, P_pred, levels=100, cmap='viridis')
     ax2.set_title('PINN Prediction', fontsize=14)
     ax2.set_xlabel('Time ($\hat{t}$)', fontsize=12)
-    fig.colorbar(im2, ax2=ax2)
+    fig.colorbar(im2, ax=ax2)
     
     error = np.abs(P_exact - P_pred)
     im3 = ax3.contourf(T, X, error, levels=100, cmap='magma')
     ax3.set_title('Absolute Error', fontsize=14)
     ax3.set_xlabel('Time ($\hat{t}$)', fontsize=12)
-    fig.colorbar(im3, ax3=ax3)
+    fig.colorbar(im3, ax=ax3)
     
     plt.tight_layout()
     plt.savefig(os.path.join(ASSETS_DIR, 'pressure_field_comparison.png'), dpi=300, bbox_inches='tight')
