@@ -35,24 +35,33 @@ $$ \frac{\partial \hat{p}}{\partial \hat{t}} - \frac{\partial^2 \hat{p}}{\partia
 
 ## 📊 Results & Visualizations
 
-During training, the model evaluates its predictions against the exact analytical Fourier series solution. The graphs below are generated automatically upon training.
+During training, the models evaluate their predictions against exact analytical solutions.
 
-### 1. Spatio-Temporal Pressure Field
-The PINN learns the continuous field solution mapping accurately to the exact solution. Notice the near-zero absolute error!
+### 2D Steady-State Heat Conduction
+Solving $\Delta T + 1 = 0$ on a 2D square domain with $T=0$ at the boundaries. The PINN perfectly learns the heat distribution, with the highest error confined to the extreme corners where gradients are sharpest!
+
+<div align="center">
+  <img src="assets/heat_2d_comparison.png" alt="2D Heat Field Comparison" width="100%">
+</div>
+
+---
+
+### 1D Spatio-Temporal Consolidation (Diffusion)
+The model also solves the 1D diffusion equation $\frac{\partial \hat{p}}{\partial \hat{t}} - \frac{\partial^2 \hat{p}}{\partial \hat{x}^2} = 0$.
 
 <div align="center">
   <img src="assets/pressure_field_comparison.png" alt="Pressure Field Heatmap" width="100%">
 </div>
 
-### 2. Cross-Sectional Profiles over Time
-A slice of the pressure profile at specific time steps ($t=0.05, 0.1, 0.3$). The PINN predictions (dashed lines with markers) perfectly track the true analytical decay over time (solid lines).
+### Cross-Sectional Profiles over Time (1D)
+A slice of the pressure profile at specific time steps ($t=0.05, 0.1, 0.3$). The PINN predictions (dashed lines) perfectly track the true analytical decay over time.
 
 <div align="center">
   <img src="assets/pressure_profiles.png" alt="Pressure Profiles" width="70%">
 </div>
 
-### 3. Training Convergence
-The total loss is a composite of the PDE residual loss, the Initial Condition loss, and the Boundary Condition loss.
+### Training Convergence
+The total loss is a composite of the PDE residual loss and the initial/boundary condition losses.
 
 <div align="center">
   <img src="assets/loss_curve.png" alt="Loss Curve" width="60%">
@@ -67,7 +76,8 @@ The total loss is a composite of the PDE residual loss, the Initial Condition lo
 ml_mini_project/
 ├── assets/                  # Generated graphs and visualizations
 ├── src/
-│   └── pinn.py              # Main model and training loop
+│   ├── pinn.py              # 1D Consolidation model
+│   └── pinn_2d_heat.py      # 2D Heat Conduction model
 ├── requirements.txt         # Python dependencies
 ├── README.md                # Project documentation
 └── writeup.md               # Summary report 
@@ -82,10 +92,11 @@ cd ml_mini_project
 pip install -r requirements.txt
 ```
 
-### 3. Running the Model
-Train the neural network and automatically generate the result graphs in the `assets/` folder:
+### 3. Running the Models
+Train the neural networks and automatically generate the result graphs in the `assets/` folder:
 
 ```bash
+python src/pinn_2d_heat.py
 python src/pinn.py
 ```
 
